@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weather>
+    <rain value="60"/>
+    <snow value="100"/>
+</weather>
