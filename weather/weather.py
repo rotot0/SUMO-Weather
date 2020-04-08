@@ -52,11 +52,25 @@ def consider_rain(rain_val):
                 all_vehs.append(veh_id)
 
 
+def consider_weather(w_info):
+    all_vehs = list()
+    w_list = list()
+    for w_type, w_val in w_info:
+        if w_type == "rain":
+            w_list.append(Rain(w_val['value']))
+        if w_type == "snow":
+            w_list.append(Snow(w_val['value']))
+    while traci.simulation.getMinExpectedNumber() > 0:
+        traci.simulationStep()
+        vehs = traci.vehicle.getIDList()
+        for veh_id in vehs:
+            if veh_id not in all_vehs:
+                veh_params = get_veh_params(veh_id)
+                for w in w_list:
+                    w.changeParams(veh_id, veh_params)
+                all_vehs.append(veh_id)
+
+
 def weather_main():
     weather = get_weather('data/weather.xml')
-    if 'snow' in weather:
-        snow_val = weather['snow']['value']
-        consider_snow(snow_val)
-    if 'rain' in weather:
-        rain_val = weather['rain']['value']
-        consider_rain(rain_val)
+    consider_weather(weather.items())
