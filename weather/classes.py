@@ -31,7 +31,7 @@ class Weather:
         self.changeMaxSpeed(veh_id, veh_params['maxSpeed'])
         self.changeMinGap(veh_id, veh_params['minGap'])
 
-    def printAll(self):
+    def printWValue(self):
         print(self.weather_val)
 
 
@@ -85,10 +85,3 @@ class Rain(Weather, object):
 
     def changeMinGap(self, veh_id, param):
         traci.vehicle.setMinGap(veh_id, param * (0.03 * self.weather_val))
-
-# def main():
-# s = Snow(2)
-# s.changeParams('kn')
-
-# if __name__ == '__main__':
-#     main()

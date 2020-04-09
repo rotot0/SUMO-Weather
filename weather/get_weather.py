@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from numpy import random
 
 # parse xml file. returns info about weather 
 def get_weather(file_name):
@@ -9,4 +10,15 @@ def get_weather(file_name):
         if child.tag in weather:
             raise SyntaxError("Weather duplicate.")
         weather[child.tag] = child.attrib
+    for w in weather:
+        if 'value' not in w:
+            weather[w]['value'] = random.uniform(0, 100)
+
     return weather
+
+def main():
+    print get_weather('../traci_tls_weather/data/weather.xml')
+
+
+if __name__ == '__main__':
+    main()
