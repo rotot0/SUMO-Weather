@@ -15,10 +15,3 @@ def get_weather(file_name):
             weather[w]['value'] = random.uniform(0, 100)
 
     return weather
-
-def main():
-    print get_weather('../traci_tls_weather/data/weather.xml')
-
-
-if __name__ == '__main__':
-    main()
