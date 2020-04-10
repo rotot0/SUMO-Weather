@@ -24,3 +24,9 @@ def get_weather(file_name):
             raise SyntaxError("Value must be in [0, 100]")
 
     return weather, xp, yp
+
+    for w in weather:
+        if 'value' not in w:
+            weather[w]['value'] = random.uniform(0, 100)
+
+    return weather
