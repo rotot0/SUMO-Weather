@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weather>
-    <rain value="60"/>
-    <snow value="100"/>
+    <snow x="450, 450, 600, 600" y="450, 600, 600, 450" value="99"/>
 </weather>

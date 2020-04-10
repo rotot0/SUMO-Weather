@@ -26,6 +26,7 @@ import sys
 import optparse
 import random
 
+# path to weather
 sys.path.insert(1, '/Users/rototo/Desktop/project/weather')
 from weather import *
 
