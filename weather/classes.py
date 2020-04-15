@@ -25,11 +25,15 @@ class Weather:
     def changeMinGap(self, veh_id, param):
         pass
 
+    def changeColor(self, veh_id, param):
+        pass
+
     def changeParams(self, veh_id, veh_params):
         self.changeAccel(veh_id, veh_params['accel'])
         self.changeDecel(veh_id, veh_params['decel'])
         self.changeMaxSpeed(veh_id, veh_params['maxSpeed'])
         self.changeMinGap(veh_id, veh_params['minGap'])
+        self.changeColor(veh_id, veh_params['color'])
 
     def printWValue(self):
         print(self.weather_val)
@@ -60,6 +64,12 @@ class Snow(Weather, object):
     def changeMinGap(self, veh_id, param):
         traci.vehicle.setMinGap(veh_id, param * (0.04 * self.weather_val))
 
+    def changeColor(self, veh_id, param):
+        color_values = list(param)
+        print(param)
+        color_values[3] = 50
+        traci.vehicle.setColor(veh_id, tuple(color_values))
+
 
 class Rain(Weather, object):
     def __init__(self, snow_val=1.0):
@@ -82,6 +92,13 @@ class Rain(Weather, object):
             traci.vehicle.setMaxSpeed(veh_id, param)
         else:
             traci.vehicle.setMaxSpeed(veh_id, param / (0.03 * self.weather_val))
+
+    def changeColor(self, veh_id, param):
+        color_values = list(param)
+        color_values[0] /= 2
+        color_values[1] /= 3
+        color_values[2] = 255
+        traci.vehicle.setColor(veh_id, tuple(color_values))
 
     def changeMinGap(self, veh_id, param):
         traci.vehicle.setMinGap(veh_id, param * (0.03 * self.weather_val))
