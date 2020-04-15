@@ -18,7 +18,8 @@ def get_veh_params(veh_id):
     params = {'accel': traci.vehicle.getAccel(veh_id), 
               'decel': traci.vehicle.getDecel(veh_id),
               'maxSpeed': traci.vehicle.getMaxSpeed(veh_id),
-              'minGap': traci.vehicle.getMinGap(veh_id)}
+              'minGap': traci.vehicle.getMinGap(veh_id),
+              'color': traci.vehicle.getColor(veh_id)}
 
     return params
 
@@ -29,7 +30,6 @@ def consider_weather(w_info):
         if w_type == "rain":
             w_list.append(Rain(w_val['value']))
         if w_type == "snow":
-            print "snow_val = ", w_val['value']
             w_list.append(Snow(w_val['value']))
 
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -60,7 +60,6 @@ def consider_weather_area(w_info, xp, yp):
         if w_type == "rain":
             w_list.append(Rain(w_val['value']))
         if w_type == "snow":
-            print "snow_val = ", w_val['value']
             w_list.append(Snow(w_val['value']))
 
     while traci.simulation.getMinExpectedNumber() > 0:
