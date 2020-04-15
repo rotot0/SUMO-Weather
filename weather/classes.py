@@ -95,7 +95,7 @@ class Rain(Weather, object):
 
     def changeColor(self, veh_id, param):
         color_values = list(param)
-        color_values[0] /= 2
+        color_values[0] /= 3
         color_values[1] /= 3
         color_values[2] = 255
         traci.vehicle.setColor(veh_id, tuple(color_values))
