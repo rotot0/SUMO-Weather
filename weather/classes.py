@@ -66,7 +66,7 @@ class Snow(Weather, object):
 
     def changeColor(self, veh_id, param):
         color_values = list(param)
-        print(param)
+        # print(param)
         color_values[3] = 50
         traci.vehicle.setColor(veh_id, tuple(color_values))
 
