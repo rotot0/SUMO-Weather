@@ -8,6 +8,38 @@ else:
 
 import traci
 
+# checks if veh in polygon
+def inPolygon(veh_id, xp, yp):
+    x = traci.vehicle.getPosition(veh_id)[0]
+    y = traci.vehicle.getPosition(veh_id)[1]
+    c = 0
+    for i in range(len(xp)):
+        if (((yp[i] <= y and y < yp[i - 1]) or (yp[i - 1] <= y and y < yp[i])) and \
+                (x > (xp[i - 1] - xp[i]) * (y - yp[i]) / (yp[i - 1] - yp[i]) + xp[i])): c = 1 - c
+
+    return c
+
+
+def inCircle(veh_id, c_x, c_y, r):
+    x = traci.vehicle.getPosition(veh_id)[0]
+    y = traci.vehicle.getPosition(veh_id)[1]
+    return ((c_x - x) ** 2 + (c_y - y) ** 2) ** 0.5 <= r
+
+
+
+
+
+def inArea(veh_id, a_type, a_params):
+    if a_type == 'polygon':
+        xp = a_params[0]
+        yp = a_params[1]
+        return inPolygon(veh_id, xp, yp)
+    if a_type == 'circle':
+        c_x = a_params[0]
+        c_y = a_params[1]
+        r = a_params[2]
+        return inCircle(veh_id, c_x, c_y, r)
+
 
 # return parametres of vehicle
 def get_veh_params(veh_id):
@@ -115,11 +147,17 @@ class Rain(Weather, object):
 
 
 class Vehicle:
-    def __init__(self, veh_id, xp, yp):
+    def __init__(self, veh_id, a_type="none", a_params=tuple()):
         self.id = veh_id
-        self.original_params = tuple(sorted(get_veh_params(self.id).items()))
-        self.polygon_x = xp
-        self.polygon_y = yp
+        if veh_id == "none":
+            self.original_params = tuple()
+        else:
+            self.original_params = tuple(sorted(get_veh_params(self.id).items()))
+        self.area_type = a_type
+        self.area_params = a_params
+
+    def in_area(self):
+        return inArea(self.id, self.area_type, self.area_params)
 
     def restore_params(self):
         traci.vehicle.setAccel(self.id, self.original_params[0][1])
