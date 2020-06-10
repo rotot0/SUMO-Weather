@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weather>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <snow x="450, 450, 600, 600" y="450, 600, 600, 450" value="50"/>
-=======
     <rain x="450, 450, 600, 600" y="450, 600, 600, 450" value="99"/>
->>>>>>> 61386903e41c853049b66d175821bf5f16dec667
-=======
     <rain>
         <circle c_x="0" c_y="510" r="200" value="99"/>
     </rain>
     <snow>
         <polygon x="450, 450, 600, 600" y="450, 600, 600, 450" value="99"/>
     </snow>
->>>>>>> 6751e838f0292344aba77096aafcc8db295b95ea
 </weather>
