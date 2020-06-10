@@ -2,8 +2,10 @@ import sys
 import os
 import xml.etree.ElementTree as ET
 
+from math import sin, cos, pi
 from get_weather import get_weather
 from classes import *
+from random import randint
 
 from pyllist import *
 
@@ -73,10 +75,41 @@ def changeWParams(w_type, w_info, veh_id, vehs_set):
             ret_val = changeAParams(veh_id, vehs_set, w, circle, 'circle')
     return ret_val
 
+def drawAreas(weather, color):
+    a_num = 0
+    for polygon in weather.findall('polygon'):
+        shape = list()
+        xp = list([float(i) for i in polygon.get('x').split(", ")])
+        yp = list([float(i) for i in polygon.get('y').split(", ")])
+        for i in range(len(xp)):
+            shape.append((xp[i], yp[i]))
+        shape.append((xp[0], yp[0]))
+        traci.polygon.add('r' + str(a_num) + str(randint(0, 10 ** 6)), shape, (0, 0, 255))
+        a_num += 1
+    for circle in weather.findall('circle'):
+        c_x = float(circle.get('c_x'))
+        c_y = float(circle.get('c_y'))
+        r = float(circle.get('r'))
+        num_vertices = 3
+        shape = list()
+        while 2 * r * sin(pi / num_vertices) > 5:
+            num_vertices += 1
+        print(num_vertices)
+        for i in range(num_vertices):
+            shape.append((c_x + r * cos(2 * pi * i / num_vertices),
+                          c_y + r * sin(2 * pi * i / num_vertices)))
+        traci.polygon.add('r' + str(a_num) + str(randint(0, 10 ** 6)), shape, (0, 0, 255))
+        a_num += 1
+
+
 
 def consider_weather_area(w_info):
     all_vehs = set()
     aff_vehs = dllist()
+    for rain in w_info.findall('rain'):
+        drawAreas(rain, (0, 0, 255))
+    for snow in w_info.findall('snow'):
+        drawAreas(snow, (175, 238, 238))
     # for w_type, w_val in w_info:
     #     if w_type == "rain":
     #         w_list.append(Rain(w_val['value']))
