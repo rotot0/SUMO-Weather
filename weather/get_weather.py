@@ -1,6 +1,5 @@
 import xml.etree.ElementTree as ET
 from numpy import random
-import re
 
 # parse xml file. returns info about weather 
 def get_weather(file_name):

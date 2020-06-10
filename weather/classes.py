@@ -117,8 +117,6 @@ class Rain(Weather, object):
 class Vehicle:
     def __init__(self, veh_id, xp, yp):
         self.id = veh_id
-        self.inPoly = list()
-        self.inPoly.append(False)
         self.original_params = tuple(sorted(get_veh_params(self.id).items()))
         self.polygon_x = xp
         self.polygon_y = yp
