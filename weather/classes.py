@@ -26,11 +26,13 @@ def inCircle(veh_id, c_x, c_y, r):
 
 
 def inArea(veh_id, a_type, a_params):
+    if a_type == 'global':
+        return True
     if a_type == 'polygon':
         xp = a_params[0]
         yp = a_params[1]
         return inPolygon(veh_id, xp, yp)
-    if a_type == 'circle':
+    elif a_type == 'circle':
         c_x = a_params[0]
         c_y = a_params[1]
         r = a_params[2]
@@ -48,8 +50,10 @@ def get_veh_params(veh_id):
     return params
 
 class Weather:
-    def __init__(self, weather_val=1.0):
+    def __init__(self, area, weather_val=1.0):
         self.weather_val = float(weather_val)
+        self.area = area
+        self.name="none"
 
     def changeAccel(self, veh_id, param):
         pass
@@ -78,8 +82,9 @@ class Weather:
 
 
 class Snow(Weather, object):
-    def __init__(self, snow_val=1.0):
+    def __init__(self, area, snow_val=1.0):
         super(Snow, self).__init__(snow_val)
+        self.name="snow"
 
     def changeAccel(self, veh_id, param):
         if (self.weather_val <= 12.5):
@@ -100,18 +105,21 @@ class Snow(Weather, object):
             traci.vehicle.setMaxSpeed(veh_id, param / (0.08 * self.weather_val))
 
     def changeMinGap(self, veh_id, param):
-        traci.vehicle.setMinGap(veh_id, param * (0.04 * self.weather_val))
+        traci.vehicle.setMinGap(veh_id, param / (0.1 * self.weather_val))
 
     def changeColor(self, veh_id, param):
         color_values = list(param)
-        print(param)
-        color_values[3] = 50
+        color_values[0] = 255
+        color_values[1] = 0
+        color_values[2] = 144
+        print(color_values)
         traci.vehicle.setColor(veh_id, tuple(color_values))
 
 
 class Rain(Weather, object):
-    def __init__(self, snow_val=1.0):
+    def __init__(self, area, snow_val=1.0):
         super(Rain, self).__init__(snow_val)
+        self.name="rain"
 
     def changeAccel(self, veh_id, param):
         if self.weather_val <= 12.5:

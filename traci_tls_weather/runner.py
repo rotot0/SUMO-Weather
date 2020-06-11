@@ -50,7 +50,7 @@ def generate_routefile():
     pNS = 1. / 30
     with open("data/cross.rou.xml", "w") as routes:
         print("""<routes>
-        <vType id="typeWE" accel="2.9" decel="7.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="180" \
+        <vType id="typeWE" accel="3" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="100" emergencyDecel="1000" \
 guiShape="passenger"/>
         <vType id="typeNS" accel="1.2" decel="4" sigma="0.5" length="7" minGap="3" maxSpeed="85" guiShape="bus"/>
 
