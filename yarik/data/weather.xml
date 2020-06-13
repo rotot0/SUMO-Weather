@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weather>
+     <rain>
+        <circle c_x="180" c_y="445" r="100" value="99"/>
+    </rain>
+</weather>

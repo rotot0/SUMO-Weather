@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weather>
-    <snow value="80"/>
+    <snow>
+        <global value="70"/>
+    </snow>
 </weather>

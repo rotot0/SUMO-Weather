@@ -26,6 +26,7 @@ def changeVehicleParams(veh_id, vehs_set, w, area, a_type):
         a_params.append(float(area.get('r')))
     if veh_id not in vehs_set and inArea(veh_id, a_type, a_params):
         vehs_set.add(veh_id)
+        print("in", veh_id, traci.vehicle.getSpeed(veh_id), traci.lane.getMaxSpeed(traci.vehicle.getLaneID(veh_id)))
         w.changeParams(veh_id, get_veh_params(veh_id))
         return ret_val
     else:
@@ -56,7 +57,11 @@ def consider_weather_area(weathers):
                 except traci.exceptions.TraCIException:
                     aff_vehs.remove(curr_veh)
                     all_vehs.remove(curr_veh.value.id)
+                    flag = 1
                 if not flag:
+                    if traci.vehicle.getLaneID(curr_veh.value.id) != '':
+                        print("out", curr_veh.value.id, traci.vehicle.getSpeed(curr_veh.value.id),
+                              traci.lane.getMaxSpeed(traci.vehicle.getLaneID(curr_veh.value.id)))
                     curr_veh.value.restore_params()
                     aff_vehs.remove(curr_veh)
                     all_vehs.remove(curr_veh.value.id)

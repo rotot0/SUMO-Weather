@@ -1,6 +1,8 @@
 <routes>
-   <vType id="car" type="passenger" length="5" accel="3.5" maxSpeed="80" decel="2.2" sigma="1.0"/>
-   <vType id="bic" type="bicycle" length="2" accel="1.5" maxSpeed="40" decel="3.2" sigma="1.0"/>
-   <flow id="carflow" type="car" beg="0" end="0" number="5" from="edge1" to="edge2"/>
+   <vType id="car" type="passenger" length="5" accel="3.5" maxSpeed="80" decel="2.2" tau="1"/>
+   <route id="circle" edges="edge1 edge2 edge3 edge4 edge5 edge6" />
+   <!-- <vType id="bic" type="bicycle" length="2" accel="1.5" maxSpeed="40" decel="3.2" sigma="1.0"/> -->
+   <vehicle id="veh_0" type="car" route="circle" depart="0"/>
+   <vehicle id="veh_1" type="car"  route="circle" depart="1"/>
    <!-- <flow id="bicflow" type="bic" beg="0" end="0" number="2" from="edge1" to="edge2"/> -->
 </routes>

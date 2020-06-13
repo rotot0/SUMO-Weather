@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on пятница, 10 апреля 2020 г. 14:14:32 by Eclipse SUMO GUI Version 1.5.0
+<!-- generated on пятница, 12 июня 2020 г. 15:55:30 by Eclipse SUMO GUI Version 1.5.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -13,8 +13,12 @@
         <tripinfo-output value="tripinfo.xml"/>
     </output>
 
+    <processing>
+        <collision.mingap-factor value="0"/>
+    </processing>
+
     <traci_server>
-        <remote-port value="58869"/>
+        <remote-port value="51202"/>
     </traci_server>
 
 </configuration>

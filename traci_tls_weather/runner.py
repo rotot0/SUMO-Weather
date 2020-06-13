@@ -1,16 +1,4 @@
-#!/usr/bin/env python
-# Eclipse SUMO, Simulation of Urban MObility; see https://eclipse.org/sumo
-# Copyright (C) 2009-2020 German Aerospace Center (DLR) and others.
-# This program and the accompanying materials are made available under the
-# terms of the Eclipse Public License 2.0 which is available at
-# https://www.eclipse.org/legal/epl-2.0/
-# This Source Code may also be made available under the following Secondary
-# Licenses when the conditions for such availability set forth in the Eclipse
-# Public License 2.0 are satisfied: GNU General Public License, version 2
-# or later which is available at
-# https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
-# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-
+#!/usr/bin/env python3
 # @file    runner.py
 # @author  Lena Kalleske
 # @author  Daniel Krajzewicz
@@ -50,7 +38,7 @@ def generate_routefile():
     pNS = 1. / 30
     with open("data/cross.rou.xml", "w") as routes:
         print("""<routes>
-        <vType id="typeWE" accel="3" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="100" emergencyDecel="1000" \
+        <vType id="typeWE" accel="3" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="100" emergencyDecel="10" \
 guiShape="passenger"/>
         <vType id="typeNS" accel="1.2" decel="4" sigma="0.5" length="7" minGap="3" maxSpeed="85" guiShape="bus"/>
 
@@ -131,5 +119,6 @@ if __name__ == "__main__":
     # this is the normal way of using traci. sumo is started as a
     # subprocess and then the python script connects and runs
     traci.start([sumoBinary, "-c", "data/cross.sumocfg",
-                             "--tripinfo-output", "tripinfo.xml"])
+                             "--tripinfo-output", "tripinfo.xml",
+                             "--collision.mingap-factor", "0"])
     run()
