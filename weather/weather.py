@@ -58,6 +58,7 @@ def consider_weather_area(weathers):
                     aff_vehs.remove(curr_veh)
                     all_vehs.remove(curr_veh.value.id)
                     flag = 1
+
                 if not flag:
                     if traci.vehicle.getLaneID(curr_veh.value.id) != '':
                         print("out", curr_veh.value.id, traci.vehicle.getSpeed(curr_veh.value.id),

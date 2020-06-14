@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weather>
+     <rain>
+        <circle c_x="0" c_y="510" r="200" value="99"/>
+    </rain>
+    
+    <snow>
+        <polygon x="250, 250, 600, 600" y="450, 600, 600, 450" value="75"/>
+    </snow>
+</weather>

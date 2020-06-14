@@ -16,6 +16,7 @@ if os.path.exists(os.getcwd() + '/data/weather_funcs.py'):
     sys.path.append(FUNCS)
     import weather_funcs
 
+
 # checks if veh in polygon
 def inPolygon(veh_id, xp, yp):
     x = traci.vehicle.getPosition(veh_id)[0]
@@ -26,6 +27,7 @@ def inPolygon(veh_id, xp, yp):
                 (x > (xp[i - 1] - xp[i]) * (y - yp[i]) / (yp[i - 1] - yp[i]) + xp[i])): c = 1 - c
 
     return c
+
 
 def inCircle(veh_id, c_x, c_y, r):
     x = traci.vehicle.getPosition(veh_id)[0]
@@ -49,21 +51,24 @@ def inArea(veh_id, a_type, a_params):
 
 # return parametres of vehicle
 def get_veh_params(veh_id):
-    params = {'accel': traci.vehicle.getAccel(veh_id),
-              'color': traci.vehicle.getColor(veh_id),
-              'decel': traci.vehicle.getDecel(veh_id),
-              'maxSpeed': traci.vehicle.getMaxSpeed(veh_id),
-              'minGap': traci.vehicle.getMinGap(veh_id),
-              'speed': traci.vehicle.getSpeed(veh_id),
-              'zlane': traci.vehicle.getLaneID(veh_id)}
+    params = {
+        'accel': traci.vehicle.getAccel(veh_id),
+        'color': traci.vehicle.getColor(veh_id),
+        'decel': traci.vehicle.getDecel(veh_id),
+        'maxSpeed': traci.vehicle.getMaxSpeed(veh_id),
+        'minGap': traci.vehicle.getMinGap(veh_id),
+        'tau': traci.vehicle.getTau(veh_id),
+        'zlane': traci.vehicle.getLaneID(veh_id)
+    }
 
     return params
 
+
 class Weather:
     def __init__(self, area, weather_val=1.0):
-        self.weather_val = float(weather_val) # how strong is weather
-        self.area = area # where is weather
-        self.name="none"
+        self.weather_val = float(weather_val)  # how strong is weather
+        self.area = area  # where is weather
+        self.name = "none"
 
     def changeAccel(self, veh_id, param):
         pass
@@ -78,6 +83,12 @@ class Weather:
         pass
 
     def changeColor(self, veh_id, param):
+        pass
+
+    def changeSpeed(self, veh_id, param):
+        pass
+
+    def changeHeadwayTime(self, veh_id, param):
         pass
 
     def changeParams(self, veh_id, veh_params):
@@ -87,6 +98,7 @@ class Weather:
         self.changeMinGap(veh_id, veh_params['minGap'])
         self.changeColor(veh_id, veh_params['color'])
         self.changeSpeed(veh_id, veh_params['zlane'])
+        self.changeHeadwayTime(veh_id, veh_params['tau'])
 
     def printWValue(self):
         print(self.weather_val)
@@ -95,30 +107,32 @@ class Weather:
 class Snow(Weather, object):
     def __init__(self, area, snow_val=1.0):
         super(Snow, self).__init__(area, snow_val)
-        self.name="snow"
+        self.name = "snow"
 
     def changeAccel(self, veh_id, param):
         if FLAG and 'SnowChangeAccel' in dir(weather_funcs):
             traci.vehicle.setAccel(veh_id, weather_funcs.SnowChangeAccel(self.weather_val, param))
-        else:          
+        else:
             SnowChangeAccelD(self.weather_val, veh_id, param)
 
     def changeDecel(self, veh_id, param):
         if FLAG and 'SnowChangeDecel' in dir(weather_funcs):
             traci.vehicle.setDecel(veh_id, weather_funcs.SnowChangeDecel(self.weather_val, param))
-        else:          
+        else:
             SnowChangeDecelD(self.weather_val, veh_id, param)
 
     def changeMaxSpeed(self, veh_id, param):
         if FLAG and 'SnowChangeMaxSpeed' in dir(weather_funcs):
-            traci.vehicle.setMaxSpeed(veh_id, weather_funcs.SnowChangeMaxSpeed(self.weather_val, param))
-        else:          
+            traci.vehicle.setMaxSpeed(veh_id,
+                                      weather_funcs.SnowChangeMaxSpeed(self.weather_val, param))
+        else:
             SnowChangeMaxSpeedD(self.weather_val, veh_id, param)
 
     def changeSpeed(self, veh_id, param):
         if FLAG and 'SnowChangeSpeed' in dir(weather_funcs):
-            traci.vehicle.setSpeedFactor(veh_id, weather_funcs.SnowChangeSpeed(self.weather_val, param))
-        else:          
+            traci.vehicle.setSpeedFactor(veh_id,
+                                         weather_funcs.SnowChangeSpeed(self.weather_val, param))
+        else:
             SnowChangeSpeedD(self.weather_val, veh_id, param)
 
     def changeMinGap(self, veh_id, param):
@@ -127,54 +141,70 @@ class Snow(Weather, object):
         else:
             SnowChangeMinGapD(self.weather_val, veh_id, param)
 
+    def changeHeadwayTime(self, veh_id, param):
+        if FLAG and 'SnowChangeHeadwayTime' in dir(weather_funcs):
+            traci.vehicle.setMinGap(veh_id, weather_funcs.SnowChangeHeadwayTime(self.weather_val, param))
+        else:
+            SnowChangeHeadwayTimeD(self.weather_val, veh_id, param)
+
     def changeColor(self, veh_id, param):
         if FLAG and 'SnowChangeColor' in dir(weather_funcs):
             color_values = list(param)
-            traci.vehicle.setColor(veh_id, tuple(weather_funcs.SnowChangeColor(self.weather_val, color_values)))
-        else:          
+            traci.vehicle.setColor(veh_id, tuple(
+                weather_funcs.SnowChangeColor(self.weather_val, color_values)))
+        else:
             SnowChangeColorD(self.weather_val, veh_id, param)
 
 
 class Rain(Weather, object):
     def __init__(self, area, rain_val=1.0):
         super(Rain, self).__init__(area, rain_val)
-        self.name="rain"
+        self.name = "rain"
 
     def changeAccel(self, veh_id, param):
         if FLAG and 'RainChangeAccel' in dir(weather_funcs):
             traci.vehicle.setAccel(veh_id, weather_funcs.RainChangeAccel(self.weather_val, param))
-        else:          
+        else:
             RainChangeAccelD(self.weather_val, veh_id, param)
 
     def changeDecel(self, veh_id, param):
         if FLAG and 'RainChangeDecel' in dir(weather_funcs):
             traci.vehicle.setDecel(veh_id, weather_funcs.RainChangeDecel(self.weather_val, param))
-        else:          
+        else:
             RainChangeDecelD(self.weather_val, veh_id, param)
 
     def changeMaxSpeed(self, veh_id, param):
         if FLAG and 'RainChangeMaxSpeed' in dir(weather_funcs):
-            traci.vehicle.setMaxSpeed(veh_id, weather_funcs.RainChangeMaxSpeed(self.weather_val, param))
-        else:          
+            traci.vehicle.setMaxSpeed(veh_id,
+                                      weather_funcs.RainChangeMaxSpeed(self.weather_val, param))
+        else:
             RainChangeMaxSpeedD(self.weather_val, veh_id, param)
 
     def changeSpeed(self, veh_id, param):
         if FLAG and 'RainChangeSpeed' in dir(weather_funcs):
-            traci.vehicle.setSpeedFactor(veh_id, weather_funcs.RainChangeSpeed(self.weather_val, param))
-        else:          
+            traci.vehicle.setSpeedFactor(veh_id,
+                                         weather_funcs.RainChangeSpeed(self.weather_val, param))
+        else:
             RainChangeSpeedD(self.weather_val, veh_id, param)
 
     def changeMinGap(self, veh_id, param):
         if FLAG and 'RainChangeMinGap' in dir(weather_funcs):
             traci.vehicle.setMinGap(veh_id, weather_funcs.RainChangeMinGap(self.weather_val, param))
-        else:          
+        else:
             RainChangeMinGapD(self.weather_val, veh_id, param)
+
+    def changeHeadwayTime(self, veh_id, param):
+        if FLAG and 'RainChangeHeadwayTime' in dir(weather_funcs):
+            traci.vehicle.setMinGap(veh_id, weather_funcs.RainChangeHeadwayTime(self.weather_val, param))
+        else:
+            RainChangeHeadwayTimeD(self.weather_val, veh_id, param)
 
     def changeColor(self, veh_id, param):
         if FLAG and 'RainChangeColor' in dir(weather_funcs):
             color_values = list(param)
-            traci.vehicle.setColor(veh_id, tuple(weather_funcs.RainChangeColor(self.weather_val, color_values)))
-        else:          
+            traci.vehicle.setColor(veh_id, tuple(
+                weather_funcs.RainChangeColor(self.weather_val, color_values)))
+        else:
             RainChangeColorD(self.weather_val, veh_id, param)
 
 
@@ -197,4 +227,5 @@ class Vehicle:
         traci.vehicle.setDecel(self.id, self.original_params[2][1])
         traci.vehicle.setMaxSpeed(self.id, self.original_params[3][1])
         traci.vehicle.setMinGap(self.id, self.original_params[4][1])
+        traci.vehicle.setTau(self.id, self.original_params[5][1])
         traci.vehicle.setSpeedFactor(self.id, 1)
