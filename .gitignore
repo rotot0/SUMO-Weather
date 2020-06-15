@@ -1,3 +1,4 @@
 *.pyc
 traci_tls_weather/plain/
 weather/__pycache__
+*.DS_STORE
