@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weather>
      <rain>
+        <!-- <global value="99"/> -->
         <circle c_x="0" c_y="510" r="200" value="99"/>
     </rain>
     

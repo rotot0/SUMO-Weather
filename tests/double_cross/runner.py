@@ -7,18 +7,18 @@ import sys
 import optparse
 import random
 
-# path to weather
-sys.path.insert(1, '/Users/rototo/Desktop/project/weather')
-from weather import *
-
 # import python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
+    # path to weather (!)
+    sys.path.append(tools + '/weather_project')
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 
 from sumolib import checkBinary
+# import weather
+from weather import *
 import traci
 
 
@@ -80,7 +80,7 @@ guiShape="passenger"/>
         print("</routes>", file=routes)
 
 def run():
-    weather_enable = 0 # weather_enable = 0 if you want to disable weather
+    weather_enable = 1 # weather_enable = 0 if you want to disable weather
 
     if weather_enable:
         weather_main()
@@ -92,20 +92,9 @@ def run():
     sys.stdout.flush()
 
 
-def get_options(): 
-    optParser = optparse.OptionParser()
-    optParser.add_option("--nogui", action="store_true",
-                         default=False, help="run the commandline version of sumo")
-    options, args = optParser.parse_args()
-    return options
-
 if __name__ == "__main__":
-    options = get_options()
     # start sumo as a server, then connect and run
-    if options.nogui:
-        sumoBinary = checkBinary('sumo')
-    else:
-        sumoBinary = checkBinary('sumo-gui')
+    sumoBinary = checkBinary('sumo-gui')
 
     generate_routefile()
 
@@ -113,7 +102,6 @@ if __name__ == "__main__":
     traci.start([sumoBinary, "-c", "data/cross.sumocfg",
                              "--tripinfo-output", "tripinfo.xml",
                              "--collision.mingap-factor", "0",
-                             "--fcd-output", "results/result_norain.xml",
                              "--no-warnings", "1",
                              "--ignore-route-errors", "1",])
     run()
