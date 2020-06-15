@@ -27,7 +27,7 @@
 Подробнее как именно задавать погоду, можно посмотреть в файле `tests/double_cross/data/weather.xml`. На данный момент реализовано 3 вида зоны влияние погоды: в полигоне, в круге, на всей транспортной сети. По умолчанию сила погоды указывается с помощью значение *value* и должно находиться в отрезке [0, 100].  
 По умолчанию, снег и дожь делится на три категории
 * Слабый (value <= 35)
-* Средние (35 < value <= 70)
+* Средний (35 < value <= 70)
 * Сильный (70 < value <= 100)
 
 В зависимости от силы погоды параметры меняются по-разному. По умолчанию погода с силой 0 и силой 35 будет влиять одинково, поскольку в различных исследовательских статьях чаще всего используется именно разделение на три категории силы снега или дождя.  
@@ -38,7 +38,7 @@ def SnowChangeDecel(weather_val, param);
 def SnowChangeMaxSpeed(weather_val, param); # not recommended to change vehicle's physical maxSpeed
 def SnowChangeMinGap(weather_val, param);
 def SnowChangeHeadwayTime(weather_val, param);
-def SnowChangeSpeed(weather_val, param); # changes desiredSpeed on current edge
+def SnowChangeSpeedFactor(weather_val, param);
 def SnowChangeColoe(weather_val, color_values); # arg is RGBA list
 ```
 
@@ -65,7 +65,7 @@ if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
     sys.path.append(tools)
     # path to weather
-    sys.path.append(tools + '/weather_project')
+    sys.path.append(tools + '/weather_project/weather')
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
 

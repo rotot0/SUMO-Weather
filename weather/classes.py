@@ -128,12 +128,12 @@ class Snow(Weather, object):
         else:
             SnowChangeMaxSpeedD(self.weather_val, veh_id, param)
 
-    def changeSpeed(self, veh_id, param):
-        if FLAG and 'SnowChangeSpeed' in dir(weather_funcs):
+    def changeSpeedFactor(self, veh_id, param):
+        if FLAG and 'SnowChangeSpeedFactor' in dir(weather_funcs):
             traci.vehicle.setSpeedFactor(veh_id,
-                                         weather_funcs.SnowChangeSpeed(self.weather_val, param))
+                                         weather_funcs.SnowChangeSpeedFactor(self.weather_val, param))
         else:
-            SnowChangeSpeedD(self.weather_val, veh_id, param)
+            SnowChangeSpeedFactorD(self.weather_val, veh_id, param)
 
     def changeMinGap(self, veh_id, param):
         if FLAG and 'SnowChangeMinGap' in dir(weather_funcs):
@@ -180,12 +180,12 @@ class Rain(Weather, object):
         else:
             RainChangeMaxSpeedD(self.weather_val, veh_id, param)
 
-    def changeSpeed(self, veh_id, param):
-        if FLAG and 'RainChangeSpeed' in dir(weather_funcs):
+    def changeSpeedFactor(self, veh_id, param):
+        if FLAG and 'RainChangeSpeedFactor' in dir(weather_funcs):
             traci.vehicle.setSpeedFactor(veh_id,
-                                         weather_funcs.RainChangeSpeed(self.weather_val, param))
+                                         weather_funcs.RainChangeSpeedFactor(self.weather_val, param))
         else:
-            RainChangeSpeedD(self.weather_val, veh_id, param)
+            RainChangeSpeedFactorD(self.weather_val, veh_id, param)
 
     def changeMinGap(self, veh_id, param):
         if FLAG and 'RainChangeMinGap' in dir(weather_funcs):

@@ -40,7 +40,7 @@ def SnowChangeHeadwayTimeD(weather_val, veh_id, param):
     else:
         traci.vehicle.setTau(veh_id, param * 7)
 
-def SnowChangeSpeedD(weather_val, veh_id, param):
+def SnowChangeSpeedFactorD(weather_val, veh_id, param):
     if weather_val <= 35:
         traci.vehicle.setSpeedFactor(veh_id, 0.9)
     elif weather_val <= 70:
@@ -92,7 +92,7 @@ def RainChangeHeadwayTimeD(weather_val, veh_id, param):
         traci.vehicle.setTau(veh_id, param * 2)
 
 
-def RainChangeSpeedD(weather_val, veh_id, param):
+def RainChangeSpeedFactorD(weather_val, veh_id, param):
     if weather_val <= 35:
         traci.vehicle.setSpeedFactor(veh_id, 0.96)
     elif weather_val <= 70:
