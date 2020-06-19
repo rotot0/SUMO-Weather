@@ -85,7 +85,7 @@ class Weather:
     def changeColor(self, veh_id, param):
         pass
 
-    def changeSpeed(self, veh_id, param):
+    def changeSpeedFactor(self, veh_id, param):
         pass
 
     def changeHeadwayTime(self, veh_id, param):
@@ -97,7 +97,7 @@ class Weather:
         self.changeMaxSpeed(veh_id, veh_params['maxSpeed'])
         self.changeMinGap(veh_id, veh_params['minGap'])
         self.changeColor(veh_id, veh_params['color'])
-        self.changeSpeed(veh_id, veh_params['zlane'])
+        self.changeSpeedFactor(veh_id, veh_params['zlane'])
         self.changeHeadwayTime(veh_id, veh_params['tau'])
 
     def printWValue(self):

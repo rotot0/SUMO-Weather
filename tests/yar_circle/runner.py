@@ -20,7 +20,7 @@ from weather import *
 import traci
 
 def run():
-    weather_enable = 1 # weather_enable = 0 if you want to disable weather
+    weather_enable = 0 # weather_enable = 0 if you want to disable weather
 
     if weather_enable:
         weather_main()
@@ -36,10 +36,10 @@ if __name__ == "__main__":
     sumoBinary = checkBinary('sumo-gui')
 
     # start sumo using traci
-    traci.start([sumoBinary, "-c", "data/models/yar.sumocfg",
+    traci.start([sumoBinary, "-c", "data/yar.sumocfg",
                  "--tripinfo-output", "tripinfo.xml",
                  "--collision.mingap-factor", "0",
-                 "--fcd-output", "data/result_rain.xml",
+                 "--fcd-output", "results/result_rain.xml",
                  "--ignore-route-errors", "1",
                  "--no-warnings", "1"])
     # runs simulation

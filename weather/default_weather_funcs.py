@@ -30,7 +30,12 @@ def SnowChangeMaxSpeedD(weather_val, veh_id, param):
     pass
 
 def SnowChangeMinGapD(weather_val, veh_id, param):
-    pass
+    if weather_val <= 35:
+        traci.vehicle.setMinGap(veh_id, param * 1.3)
+    elif weather_val <= 70:
+        traci.vehicle.setMinGap(veh_id, param * 1.5)
+    else:
+        traci.vehicle.setMinGap(veh_id, param * 1.7)
 
 def SnowChangeHeadwayTimeD(weather_val, veh_id, param):
     if weather_val <= 35:
@@ -80,16 +85,21 @@ def RainChangeMaxSpeedD(weather_val, veh_id, param):
 
 
 def RainChangeMinGapD(weather_val, veh_id, param):
-    pass
+    if weather_val <= 35:
+        traci.vehicle.setMinGap(veh_id, param * 1.15)
+    elif weather_val <= 70:
+        traci.vehicle.setMinGap(veh_id, param * 3)
+    else:
+        traci.vehicle.setMinGap(veh_id, param * 1.5)
 
 
 def RainChangeHeadwayTimeD(weather_val, veh_id, param):
     if weather_val <= 35:
-        traci.vehicle.setTau(veh_id, param * 1.2)
-    elif weather_val <= 70:
         traci.vehicle.setTau(veh_id, param * 1.5)
-    else:
+    elif weather_val <= 70:
         traci.vehicle.setTau(veh_id, param * 2)
+    else:
+        traci.vehicle.setTau(veh_id, param * 2.5)
 
 
 def RainChangeSpeedFactorD(weather_val, veh_id, param):

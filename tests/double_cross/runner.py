@@ -29,8 +29,8 @@ def generate_routefile():
     pWE = 1. / 20
     pEW = 1. / 21
     pNS = 1. / 30
-    pUp = 1./ 35
-    pSpec = 1. / 70
+    pUp = 1./ 20
+    pSpec = 1. / 50
 
     # generates vehicles
     with open("data/cross.rou.xml", "w") as routes:
