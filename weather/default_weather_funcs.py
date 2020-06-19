@@ -88,7 +88,7 @@ def RainChangeMinGapD(weather_val, veh_id, param):
     if weather_val <= 35:
         traci.vehicle.setMinGap(veh_id, param * 1.15)
     elif weather_val <= 70:
-        traci.vehicle.setMinGap(veh_id, param * 3)
+        traci.vehicle.setMinGap(veh_id, param * 1.3)
     else:
         traci.vehicle.setMinGap(veh_id, param * 1.5)
 
