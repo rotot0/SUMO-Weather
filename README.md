@@ -39,7 +39,7 @@ def SnowChangeMaxSpeed(weather_val, param); # not recommended to change vehicle'
 def SnowChangeMinGap(weather_val, param);
 def SnowChangeHeadwayTime(weather_val, param);
 def SnowChangeSpeedFactor(weather_val, param);
-def SnowChangeColoe(weather_val, color_values); # arg is RGBA list
+def SnowChangeColor(weather_val, color_values); # arg is RGBA list
 ```
 
 Аналагично, для дождя функции будут `def Rain...();`. Функции должны возвращать значение, которое будет установлено при попадание в зону погоды. При этом *weather_val* означает силу погоды, а *param* значение в данный момент соответствующего параметра, который должен быть изменен. Пример можно увидеть в файле `tests/double_cross/data/weather_funcs.py`. 
